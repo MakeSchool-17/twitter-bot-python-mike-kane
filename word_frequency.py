@@ -28,9 +28,25 @@ def frequency(histogram, word):  # returns frequency of word in source text
 def unique_words(histogram):  # returns the total # of uinque words in data
     return len(histogram)
 
-histogram = histogram('Biggie_Smalls_Ready_To_Die.txt')
 
-print("histogram of biggie smalls lyrics:  ")
-print(histogram)
-print('Total words used across biggie smalls album "Ready To Die":'
-      + str(unique_words(histogram)))
+def total_word_count(file):
+    totalWordCount = 0
+    f = open(file, 'r')
+    text = f.read()
+    text = text.replace('\n',  ' ')
+    pattern = re.compile("[^a-zA-Z0-9-']", re.I | re.M)
+    fullLyrics = re.split(pattern, text)
+    for lyric in fullLyrics:
+        if lyric == '':
+            fullLyrics.remove(lyric)
+
+    for lyric in fullLyrics:
+        totalWordCount += 1
+
+    return totalWordCount
+# histogram = histogram('Biggie_Smalls_Ready_To_Die.txt')
+
+# print("histogram of biggie smalls lyrics:  ")
+# print(histogram)
+# print('Total words used across biggie smalls album "Ready To Die":'
+#       + str(unique_words(histogram)))
