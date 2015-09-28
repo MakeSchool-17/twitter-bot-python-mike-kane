@@ -50,4 +50,8 @@ def make_it_readable(data):
     for line in data:
         print(line[0], line[1])
 
-print(make_it_readable(probability_checker(histogram, 10000)))
+print(make_it_readable(probability_checker(histogram, 2500)))
+# 10000 trials  = 23.358 seconds
+# 5000 trials = 11 seconds
+# 2500 trials = 5 seconds
+# Complexity is linear.  O(n)
