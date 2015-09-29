@@ -1,27 +1,21 @@
 import time
 import re
 import word_frequency as wf
+import random
 
 
 start = time.time()
 source_text = 'Biggie_Smalls_Ready_To_Die.txt'
 
 
-# def hash_table(source_text):  # O(n) Complexity
-#     # dictionary structure -- hash table of words, frequencies
-#     histogram = wf.histogram(source_text)
-#     return time.time() - start
+def hash_table(source_text):  # O(n) Complexity to create hash table
+    # dictionary structure -- hash table of words, frequencies
+    histogram = wf.histogram(source_text)
+    return histogram
 
 
-# print(hash_table(source_text))
-# benchmarks = 0.0
-# for x in range(1000):
-#     benchmarks += hash_table(source_text)
-# benchmarks /= 1000
-# print(benchmarks)
-
-
-def associative_list(source_text):
+def associative_list(source_text):  # O(n) Complexity to create hash table
+    # dictionary structure -- associative_list of words, frequencies
     word_frequency = []
     file = open(source_text, 'r')
     text = file.read()
@@ -42,4 +36,42 @@ def associative_list(source_text):
 
     return word_frequency
 
-print(associative_list(source_text))
+dictionary_histogram = hash_table(source_text)
+associative_list_histogram = associative_list(source_text)
+
+
+def get_random_vals_from_dict(histogram, num_random_words):
+    randomly_selected_words = []
+    for count in range(num_random_words):
+        randomly_selected_words.append(random.choice(histogram.keys()))
+    return (randomly_selected_words, time.time() - start)
+
+
+def get_random_vals_from_ass_list(histogram, num_random_words):
+    randomly_selected_words = []
+    for count in range(num_random_words):
+        random_word = random.choice(histogram)
+        randomly_selected_words.append(random_word)
+    return (randomly_selected_words, time.time() - start)
+
+
+def get_ass_list_benchmark(histogram, num_trials):
+    average_time = 0.0
+    for count in range(num_trials):
+        average_time += get_random_vals_from_ass_list(histogram, 10)[1]
+    average_time /= float(num_trials)
+    return average_time
+
+
+print("Associative List avg time for 10000 trials:  " + str(get_ass_list_benchmark(associative_list_histogram, 20000)))
+
+
+def get_dictionary_benchmark(histogram, num_trials):
+    average_time = 0.0
+    for count in range(num_trials):
+        average_time += get_random_vals_from_dict(histogram, 10)[1]
+    average_time /= float(num_trials)
+    return average_time
+
+print("Dictionary avg time for 10000 trials:  " + str(get_dictionary_benchmark(dictionary_histogram, 20000)))
+# dict avg time = ~2.0s

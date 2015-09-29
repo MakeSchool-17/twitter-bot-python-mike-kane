@@ -20,12 +20,14 @@ def histogram(source_text):  # generates histogram from data
 
     return lyrics_histogram
 
+# print(histogram('Biggie_Smalls_Ready_To_Die.txt'))
+
 
 def frequency(histogram, word):  # returns frequency of word in source text
     return histogram[word]
 
 
-def unique_words(histogram):  # returns the total # of uinque words in data
+def num_unique_words(histogram):  # returns the total # of uinque words in data
     return len(histogram)
 
 
