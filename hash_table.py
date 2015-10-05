@@ -1,13 +1,13 @@
-from linked_list_class import Linked_List
+from linked_list import LinkedList
 
 
-class Hash_Table():
+class HashTable():
     def __init__(self, table_size=10):
         self.table = []
         self.table_size = table_size
         self.item_count = 0
         for bucket in range(table_size):
-            self.table.append(Linked_List())
+            self.table.append(LinkedList())
 
     def load_factor(self):
         load = self.item_count / self.table_size
@@ -20,28 +20,39 @@ class Hash_Table():
 
     def set(self, key, value):
         correct_bucket = self.get_bucket(key)
-        correct_bucket.insert((key, value))
+        correct_bucket.insert_at_head((key, value))
+        self.item_count += 1
 
     def get(self, key):
         correct_bucket = self.get_bucket(key)
-        return correct_bucket.search(key)
+        current_node = correct_bucket.head
+        while current_node.data is not None:
+            if key in current_node.data:
+                return current_node.data
+            else:
+                current_node = current_node.next_node
+        return KeyError("This key is not in this list!")
 
-    def update(self, key, value):
+    def update(self, key, new_value):
         correct_bucket = self.get_bucket(key)
-        data = correct_bucket.search(key)
-        data = (key, value)
-        return "{}'s value updated to {}".format(data[0], data[1])
+        current_node = correct_bucket.head
+        found = False
+        while not found and current_node.data is not None:
+            if key in current_node.data:
+                found = True
+                current_node.data = (key, new_value)
+                return '{} updated to {}'.format(key, new_value)
+            else:
+                current_node = current_node.next_node
+        return KeyError('Cannot update: key not in list!')
 
-    def keys(self):
-        keys = []
-        for bucket in self.table:
-            for data in bucket:
-                keys.append(data[0])
-        return keys
 
-    def values(self):
-        list_of_keys = self.keys()
-        values_to_return = []
-        for key in list_of_keys:
-            values_to_return.append(self.get(key))
-        return values_to_return
+ht = HashTable()
+ht.set('a', 1)
+ht.set('b', 2)
+print(ht.get('a'))  # => 1
+print(ht.get('b'))  # => 2
+ht.update('a', 5)
+ht.update('b', 1)
+print(ht.get('a'))  # => 5
+print(ht.get('b'))  # => 1   Phew--it finally works!
