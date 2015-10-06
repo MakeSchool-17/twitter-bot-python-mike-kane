@@ -30,6 +30,7 @@ if __name__ == '__main__':
             url = line.strip()
             article = get_article(url)
             corpus += article
+            corpus += '\n' * 3
             fileCount += 1
             print('file #{}, {} successfully written'.format(fileCount, url))
 
