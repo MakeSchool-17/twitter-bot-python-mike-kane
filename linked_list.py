@@ -86,7 +86,7 @@ def test_node():
     print('===Node class tests====')
     node1 = Node({'Mike': 4})  # why curly braces here? Does this set type as dict?
     print('node1:', node1)
-    node2 = Node(['abe', 'ignat']) # ^^ same question
+    node2 = Node(['abe', 'ignat'])  # ^^ same question
     print('node2:', node2)
     node1.next = node2
     node2.next = node1
