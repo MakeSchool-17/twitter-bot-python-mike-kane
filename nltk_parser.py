@@ -9,10 +9,23 @@ remove_narration_pattern = re.compile(r'\[[^\]]+\]\s*', re.IGNORECASE |
                                       re.MULTILINE)
 
 
+def check_if_roman_numeral(word):
+    roman_numerals = ["I", "V", "X", "L", "C", "M"]
+    if len(word) == 1:
+        return False
+    for letter in word:
+        if letter not in roman_numerals:
+            return False
+    return True
+
+
 def parse_and_tokenize(source_text):
     source_text = re.sub(remove_thanks_pattern, ' ', source_text)
     source_text = re.sub(remove_narration_pattern, ' ', source_text)
     tokenized_text = word_tokenize(source_text)
+    for word in tokenized_text:
+        if check_if_roman_numeral(word):
+            tokenized_text.remove(word)
     return tokenized_text
 
 
