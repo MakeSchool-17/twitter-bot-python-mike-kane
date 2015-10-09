@@ -20,8 +20,6 @@ def histogram(source_text):  # generates histogram from data
 
     return lyrics_histogram
 
-# print(histogram('Biggie_Smalls_Ready_To_Die.txt'))
-
 
 def frequency(histogram, word):  # returns frequency of word in source text
     return histogram[word]
@@ -46,9 +44,3 @@ def total_word_count(file):
         totalWordCount += 1
 
     return totalWordCount
-# histogram = histogram('Biggie_Smalls_Ready_To_Die.txt')
-
-# print("histogram of biggie smalls lyrics:  ")
-# print(histogram)
-# print('Total words used across biggie smalls album "Ready To Die":'
-#       + str(unique_words(histogram)))
