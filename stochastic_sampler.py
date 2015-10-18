@@ -7,6 +7,8 @@ histogram = wf.histogram('Biggie_Smalls_Ready_To_Die.txt')
 def stochastic_sampler(histogram):
     totalLyricsList = []
     for word, total_use in histogram.items():
+        # [brian] You could replace the below code with:
+        # totalLyricsList.extend([word]*total_use)
         for x in range(total_use):
             totalLyricsList.append(word)
     return random.choice(totalLyricsList)
@@ -27,6 +29,10 @@ for x in range(100):
         testList.append('a')
     else:
         testList.append('b')
+
+# [brian] This could also be written:
+
+testList = ['a']*13 + ['b']*87
 
 
 def probability_checker(histogram, count):

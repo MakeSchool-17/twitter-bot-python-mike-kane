@@ -6,6 +6,8 @@ class HashTable():
         self.table = []
         self.table_size = table_size
         self.item_count = 0
+        # [brian] This is a nitpick, but python programmers would call this
+        # variable `_`, to make it clear they're not using it.
         for bucket in range(table_size):
             self.table.append(LinkedList())
 
@@ -32,6 +34,10 @@ class HashTable():
             else:
                 current_node = current_node.next_node
         return KeyError("This key is not in this list!")
+        # [brian] If a user were to wrap a call to this method in a try-catch
+        # block the catch would never be triggered. Instead you should:
+        raise KeyError("This key is not in this list!")
+
 
     def update(self, key, new_value):
         correct_bucket = self.get_bucket(key)

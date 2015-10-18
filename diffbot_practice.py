@@ -11,6 +11,10 @@ DIFFBOT_DEV_TOKEN = 'd3eb4b8e0748599261893959014a034d'
 
 def get_article(article_url):
     # set params for API request
+    # [brian] Dope! Pulling things like this into temporary variables
+    # instead of trying to put it inline in the `get` call is very nice,
+    # it makes the function a lot easier to read.  This function is exactly
+    # what I would write.
     params = {"token": DIFFBOT_DEV_TOKEN,
               "url": article_url,
               "discussion": False}
@@ -26,6 +30,8 @@ if __name__ == '__main__':
 
         corpus = ''
         fileCount = 0
+        # [brian] Instead of maintaining fileCount yourself, you could write:
+        # for fileCount, line in enumerate(urls_file):
         for line in urls_file:
             url = line.strip()
             article = get_article(url)
