@@ -23,6 +23,8 @@ class LinkedList():
         tail_str = 'tail: ' + str(self.tail) if self.tail else ''
         return 'LinkedList({}{})'.format(head_str, tail_str)
         # returns head node and tail node, as long as they dont == None
+        # [brian] This comment isn't entirely true, if self.head was [] the test would still fail.
+        # there's some more detail on the rules here: https://www.udacity.com/wiki/cs258/truthiness-in-python
 
     def is_empty(self):
         return self.size == 0
@@ -62,6 +64,9 @@ class LinkedList():
         else:
             # append new node after tail
             self.tail.next = new_node           #  ?? Why cant I just assign self.tail to new_node immediately?
+                                                # [brian] Then you wouldn't be able to traverse the list by following
+                                                # the "next" pointers. Your list would look like: A -> B -> C ??? D
+                                                # and methods like calculate_size would fail.
         # reassign tail reference
         self.tail = new_node
         self.size += 1
@@ -70,6 +75,8 @@ class LinkedList():
         if self.head is None:
             raise ValueError('List is empty')  # self-explanatory
         self.head = self.head.next  # since original head is no longer linked, does this mean it is removed?  Isn't it still in memory, or is that not important?
+                                    # [brian] Yep, that means it's removed. And it's no longer in memory. Python notices that nobody
+                                    # is using it and throws it away. It's called Garbage Collection, and it's /awesome/
         self.size -= 1
 
     def calculate_size(self):
@@ -85,8 +92,13 @@ class LinkedList():
 def test_node():
     print('===Node class tests====')
     node1 = Node({'Mike': 4})  # why curly braces here? Does this set type as dict?
+                               # [brian] This creates a new dictionary and passes it into the Node constructor.
+                               # It's the same as writing:
+                               # param = {'Mike': 4}
+                               # node1 = Node(param)
     print('node1:', node1)
     node2 = Node(['abe', 'ignat'])  # ^^ same question
+                                    # [brian] Same answer :) Except this time it's passing in a list.
     print('node2:', node2)
     node1.next = node2
     node2.next = node1
